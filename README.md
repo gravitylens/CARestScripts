@@ -9,7 +9,8 @@ In this exercise you were asked to create a basic script that calls a single Res
 ## Prototyping Complex Automations
 In this exercise you were asked to test several Rest methods in Postman.  You can import a collection of working Rest calls into Postman from the following file.
 
-[//]: <> (TODO: Create this file)
+[//]: <> (TODO: Create this file) 
+**Coming Soon**
 
 ## Creating a Powershell Wrapper
 In this exercise you were asked to create a Powershell wrapper that implemented three functions.
