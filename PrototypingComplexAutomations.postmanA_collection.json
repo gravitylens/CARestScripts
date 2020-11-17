@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "3eddb5be-5669-4e3a-ab88-4b846dbac888",
+		"name": "PrototypingComplexAutomations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Logon - CyberArk Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37a65538-f4e7-4933-a787-5f78ff97770d",
+						"exec": [
+							"function stripEndQuotes(s){",
+							"\tvar t=s.length;",
+							"\tif (s.charAt(0)=='\"') s=s.substring(1,t--);",
+							"\tif (s.charAt(--t)=='\"') s=s.substring(0,t);",
+							"\treturn s;",
+							"}",
+							"var jsonData = JSON.parse(responseBody);",
+							"str=stripEndQuotes(jsonData);",
+							"postman.setEnvironmentVariable(\"CyberArkLogonResult\", str);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{apiUsername}}\",\n\t\"password\": \"{{apiPassword}}\",\n\t\"concurrentSession\": \"false\" // v11.3\n}",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/API/Auth/CyberArk/Logon",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"API",
+						"Auth",
+						"CyberArk",
+						"Logon"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"value": "application/json",
+								"key": "Content-Type",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{apiUsername}}\",\n\t\"password\": \"{{apiPassword}}\"\n}"
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Expires",
+							"value": "-1"
+						},
+						{
+							"key": "Server",
+							"value": "Microsoft-IIS/10.0"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA33333=; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "mobileState=Desktop; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA11111=000000028C15398FB1A562CD1D4E91A6FA81FC6A06554E484D00D985DD8ED45237FD32F500000000; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA22222=C78EA53FF658A303; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA55555=cyberark; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "X-UA-Compatible",
+							"value": "IE=EmulateIE8"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-FRAME-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "Warning"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000; includeSubDomains"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 11 Nov 2018 20:50:14 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "182"
+						}
+					],
+					"cookie": [],
+					"body": "\"OTc5NjZlZDUtZDY0YS00N2RmLThiNjYtM2FhMWE5YzMwMWEwO0M3OEVBNTNGRjY1OEEzMDM7MDAwMDAwMDI4QzE1Mzk4RkIxQTU2MkNEMUQ0RTkxQTZGQTgxRkM2QTA2NTU0RTQ4NEQwMEQ5ODVERDhFRDQ1MjM3RkQzMkY1MDAwMDAwMDA7\""
+				}
+			]
+		},
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{CyberArkLogonResult}}",
+						"type": "text"
+					},
+					{
+						"type": "text",
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"testuser1\",\n    \"initialPassword\": \"Cyberark1\"\n}\n",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/api/Users",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"api",
+						"Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Safe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"type": "text",
+						"value": "{{CyberArkLogonResult}}",
+						"key": "Authorization"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"safe\": {\n\t\t\"SafeName\":\"TestSafe\",\n\t\t\"ManagingCPM\":\"PasswordManager\",\n\t\t\"NumberOfVersionsRetention\":5\n\t}\n}",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/WebServices/PIMServices.svc/Safes",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"WebServices",
+						"PIMServices.svc",
+						"Safes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Safe Member",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{CyberArkLogonResult}}"
+					},
+					{
+						"value": "application/json",
+						"type": "text",
+						"key": "Content-Type"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"member\": {\n\t\t\"MemberName\":\"testuser1\",\n\t\t\"Permissions\":\n\t\t[\n\t\t\t{\"Key\":\"UseAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"RetrieveAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"ListAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"AddAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"UpdateAccountContent\", \"Value\":true},\n\t\t\t{\"Key\":\"UpdateAccountProperties\", \"Value\":true},\n\t\t\t{\"Key\":\"InitiateCPMAccountManagementOperations\", \"Value\":true},\n\t\t\t{\"Key\":\"SpecifyNextAccountContent\", \"Value\":true},\n\t\t\t{\"Key\":\"RenameAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"DeleteAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"UnlockAccounts\", \"Value\":true},\n\t\t\t{\"Key\":\"ManageSafe\", \"Value\":true},\n\t\t\t{\"Key\":\"ManageSafeMembers\", \"Value\":true},\n\t\t\t{\"Key\":\"BackupSafe\", \"Value\":true},\n\t\t\t{\"Key\":\"ViewAuditLog\", \"Value\":true},\n\t\t\t{\"Key\":\"ViewSafeMembers\", \"Value\":true},\n\t\t\t{\"Key\":\"RequestsAuthorizationLevel\", \"Value\":1},\n\t\t\t{\"Key\":\"AccessWithoutConfirmation\", \"Value\":true},\n\t\t\t{\"Key\":\"CreateFolders\", \"Value\":true},\n\t\t\t{\"Key\":\"DeleteFolders\", \"Value\":true},\n\t\t\t{\"Key\":\"MoveAccountsAndFolders\", \"Value\":true}\n\t\t]\n\t}\n}",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/WebServices/PIMServices.svc/Safes/TestSafe/Members",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"WebServices",
+						"PIMServices.svc",
+						"Safes",
+						"TestSafe",
+						"Members"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"type": "text",
+						"key": "Authorization",
+						"value": "{{CyberArkLogonResult}}"
+					},
+					{
+						"type": "text",
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"address\": \"target-linux\",\n\t\"userName\": \"root\",\n\t\"platformId\": \"TestUnixviaSSH\",\n\t\"safeName\": \"TestSafe\",\n\t\"secretType\": \"password\",\n\t\"secret\": \"Cyberark1\"\n}",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/api/Accounts",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"api",
+						"Accounts"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add Dual Account - 201 Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"value": "{{CyberArkLogonResult}}",
+								"type": "text",
+								"key": "Authorization",
+								"disabled": true
+							},
+							{
+								"type": "text",
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Database-MySQL-db2.joegarcia.dev-cluster02sqluser01\",\n\t\"address\": \"db2.joegarcia.dev\",\n\t\"userName\": \"cluster02sqluser01\",\n\t\"platformId\": \"MySQLServer-DualAccounts\",\n\t\"safeName\": \"D-MySQL-Users\",\n\t\"secretType\": \"password\",\n\t\"secret\": \"Cyberark1\",\n\t\"platformAccountProperties\": {\n\t\t\"VirtualUsername\": \"cluster02sqluser\",\n\t\t\"Index\": \"1\",\n\t\t\"DualAccountStatus\": \"Active\"\n\t},\n\t\"secretManagement\": {\n\t\t\"automaticManagementEnabled\": false,\n\t\t\"manualManagementReason\": \"testing\"\n\t}\n}"
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Expires",
+							"value": "-1"
+						},
+						{
+							"key": "Location",
+							"value": "https://cyberark.joegarcia.dev/PasswordVault/api/Accounts/29_7"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA22222=5CD7FDF700FD44E2; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA11111=00000002BD847BB673806B6186BE3FB6EB49CFE4EAB00A619FE17D78321027A47916681700000000; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA55555=radius; path=/PasswordVault/; secure"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "CA33333=; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "mobileState=Desktop; path=/PasswordVault/; secure; HttpOnly"
+						},
+						{
+							"key": "api-supported-versions",
+							"value": "11.0"
+						},
+						{
+							"key": "X-FRAME-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=3159600;includeSubdomains;preload"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000; includeSubDomains"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-UA-Compatible",
+							"value": "IE=EmulateIE8"
+						},
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "Warning"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 07 Feb 2020 19:04:06 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "481"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"29_7\",\n    \"name\": \"Database-MySQL-db2.joegarcia.dev-cluster02sqluser01\",\n    \"address\": \"db2.joegarcia.dev\",\n    \"userName\": \"cluster02sqluser01\",\n    \"platformId\": \"MySQLServer-DualAccounts\",\n    \"safeName\": \"D-MySQL-Users\",\n    \"secretType\": \"password\",\n    \"platformAccountProperties\": {\n        \"Index\": \"1\",\n        \"DualAccountStatus\": \"Active\",\n        \"VirtualUsername\": \"cluster02sqluser\"\n    },\n    \"secretManagement\": {\n        \"automaticManagementEnabled\": false,\n        \"manualManagementReason\": \"testing\",\n        \"lastModifiedTime\": 1581084295\n    },\n    \"createdTime\": 1581084295\n}"
+				}
+			]
+		},
+		{
+			"name": "Change Password Immediately",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"type": "text",
+						"value": "{{CyberArkLogonResult}}",
+						"key": "Authorization"
+					},
+					{
+						"type": "text",
+						"value": "application/json",
+						"key": "Content-Type"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ChangeEntireGroup\" : true\n}",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/API/Accounts/{{AccountID}}/Change",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"API",
+						"Accounts",
+						"{{AccountID}}",
+						"Change"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Connect Using PSM",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{CyberArkLogonResult}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"type": "text",
+						"value": "RDP",
+						"key": "Accept"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"reason\":\"Test\",\n\t\"ConnectionComponent\":\"PSM-SSH\"\n}",
+					"options": {}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/PasswordVault/API/Accounts/{{AccountID}}/PSMConnect",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"PasswordVault",
+						"API",
+						"Accounts",
+						"{{AccountID}}",
+						"PSMConnect"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
