@@ -15,7 +15,7 @@ limitations under the License.
 #>
 $global:headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $global:headers.Add("Content-Type", "application/json")
-$global:url = "https://comp01a.cyber-ark-demo.local"
+$global:url = "https://pvwa.acme.corp"
 
 function New-CASession{
     Param(

@@ -95,7 +95,7 @@ $psmrecsafeperms=@(
 )
 
 #Retrieve the Administrator password from the Vault and Start a new session.
-$(Get-CCPCredential -AppID App-PVWA-API -Safe CyberArk-Admin -Username Administrator -URL $url).ToCredential() | New-CASession
+$(Get-CCPCredential -AppID App-PVWA-API -Safe CyberArk-Admin -Username SafeFactory -URL $url).ToCredential() | New-CASession
 #Get-Credential | New-CASession
 
 Import-csv ./test.csv | ForEach-Object{

@@ -15,8 +15,6 @@ limitations under the License.
 #>
 Import-Module -Force ./wrapper.psm1
 
-Get-Credential -UserName "Administrator" | New-CASession
-
 $Permissions=@(
      @{"Key"="UseAccounts"; "Value"=$true},
      @{"Key"="RetrieveAccounts"; "Value"=$true},
@@ -31,14 +29,19 @@ $Permissions=@(
      @{"Key"="UnlockAccounts"; "Value"=$true},
      @{"Key"="ManageSafe"; "Value"=$true},
      @{"Key"="ManageSafeMembers"; "Value"=$true},
-#     @{"Key"="BackupSafe"; "Value"=$true},
+     @{"Key"="BackupSafe"; "Value"=$true},
      @{"Key"="ViewAuditLog"; "Value"=$true},
      @{"Key"="ViewSafeMembers"; "Value"=$true},
-#     @{"Key"="RequestsAuthorizationLevel"; "Value"=1},
+     @{"Key"="RequestsAuthorizationLevel"; "Value"=1},
      @{"Key"="AccessWithoutConfirmation"; "Value"=$true},
      @{"Key"="CreateFolders"; "Value"=$true},
      @{"Key"="DeleteFolders"; "Value"=$true},
      @{"Key"="MoveAccountsAndFolders"; "Value"=$true}
 )
 
-@("ASafe45","ASafe46", "ASafe47") | New-CASafe | New-CASafeMember -Member "Vault Admins" -Permissions $Permissions
+#Test without Secure String
+#New-CASession -username "SafeFactory" -password "Cyberark1"
+
+#Test with Secure String
+Get-Credential -UserName "SafeFactory" | New-CASession
+@("Safe4", "Safe5", "Safe6")| New-CASafe | New-CASafeMember -MemberName "Vault Admins" -Permissions $Permissions
