@@ -15,12 +15,12 @@ limitations under the License.
 #>
 $global:headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $global:headers.Add("Content-Type", "application/json")
-$global:url = "https://comp01a.cyber-ark-demo.local/passwordvault/api"
+$global:url = "https://pvwa.acme.corp"
 
-$uri="$url/Auth/cyberark/Logon"
+$uri="$url/PasswordVault/api/Auth/cyberark/Logon"
 
 $body = @{
-    username = "Administrator"
+    username = "SafeFactory"
     password = "Cyberark1"
     concurrentSession = "false"
 } | ConvertTo-Json
