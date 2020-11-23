@@ -101,6 +101,7 @@ $(Get-CCPCredential -AppID App-PVWA-API -Safe CyberArk-Admin -Username SafeFacto
 
 Import-csv ./test.csv | ForEach-Object{
     $SafeName = $_.SafeName
+    $RecSafename = "Rec_" + $SafeName
     $UsersGroup = "CyberArk_$($SafeName)_Users"
     $ManagersGroup = "CyberArk_$($SafeName)_Managers"
     $AuditorsGroup = "CyberArk_$($SafeName)_Auditors"
@@ -113,7 +114,7 @@ Import-csv ./test.csv | ForEach-Object{
     
     #Add Vault Admins to Safes
     New-CASafeMember -SafeName $SafeName -MemberName "Vault Admins" -SearchIn "Vault" -Permissions $vaultadminsafeperms
-    New-CASafeMember -SafeName "Rec_$SafeName" -MemberName "Vault Admins" -SearchIn "Vault" -Permissions $vaultadminsafeperms
+    New-CASafeMember -SafeName $RecSafeName -MemberName "Vault Admins" -SearchIn "Vault" -Permissions $vaultadminsafeperms
     
     #Add Users to Safes
     New-CAADGroup $UsersGroup
@@ -122,13 +123,13 @@ Import-csv ./test.csv | ForEach-Object{
     #Add Managers to Safes
     New-CAADGroup $ManagersGroup
     New-CASafeMember -SafeName $SafeName -MemberName $ManagersGroup -SearchIn "cyber-ark-demo.local" -Permissions $managersafeperms
-    New-CASafeMember -SafeName "Rec_$SafeName" -MemberName $ManagersGroup -SearchIn "cyber-ark-demo.local" -Permissions $managerrecsafeperms
+    New-CASafeMember -SafeName $RecSafeName -MemberName $ManagersGroup -SearchIn "cyber-ark-demo.local" -Permissions $managerrecsafeperms
 
     #Add Auditors to Safes
     New-CAADGroup $AuditorsGroup
     New-CASafeMember -SafeName $SafeName -MemberName $AuditorsGroup -SearchIn "cyber-ark-demo.local" -Permissions $auditorsafeperms
-    New-CASafeMember -SafeName "Rec_$SafeName" -MemberName $AuditorsGroup -SearchIn "cyber-ark-demo.local" -Permissions $auditorrecsafeperms
+    New-CASafeMember -SafeName $RecSafeName -MemberName $AuditorsGroup -SearchIn "cyber-ark-demo.local" -Permissions $auditorrecsafeperms
     
     #Add PSMMaster to Safes
-    New-CASafeMember -SafeName "Rec_$SafeName" -MemberName "PSMMaster" -SearchIn "Vault" -Permissions $psmrecsafeperms
+    New-CASafeMember -SafeName $RecSafeName -MemberName "PSMMaster" -SearchIn "Vault" -Permissions $psmrecsafeperms
 }
