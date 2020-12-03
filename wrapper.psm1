@@ -108,9 +108,16 @@ function New-CASafe{
         }
         #If unsuccessfull display simple error message
         #TODO: If creation fails because safe already exists run Get-Safe and return safe properties anyway
-        Catch {
-            write-host "Unable to create safe $SafeName."
-            #TODO: Include an error message as well.
+        CATCH{
+            #If the Rest Method fails, assign an appropriate error message to $response
+            $response = "ErrorCode: " + $_.Exception.Response.StatusCode.value__ + "`n"
+            $response += "Uri: " + $uri + "`n"
+            $response += "Method: " + $method + "`n"
+            $response += "Body: " + $body + "`n"
+            $response += "Headers: `n"# + $headers.GetEnumerator() | ForEach-Object { $_.Value }
+            foreach ($key in $headers.Keys) { 
+                $response += "$key -> $($headers[$key])`n" 
+            } 
         }
         #Return Safe Properties to STDOUT
         return $response.AddSafeResult;
@@ -171,9 +178,16 @@ function New-CASafeMember{
         Try{
             $response = Invoke-RestMethod -uri $uri -Method 'POST' -Headers $headers -Body $body
         }
-        Catch{
-            write-host "Unable to add $MemberName to $SafeName"            
-            #TODO: Include an error message.
+        CATCH{
+            #If the Rest Method fails, assign an appropriate error message to $response
+            $response = "ErrorCode: " + $_.Exception.Response.StatusCode.value__ + "`n"
+            $response += "Uri: " + $uri + "`n"
+            $response += "Method: " + $method + "`n"
+            $response += "Body: " + $body + "`n"
+            $response += "Headers: `n"# + $headers.GetEnumerator() | ForEach-Object { $_.Value }
+            foreach ($key in $headers.Keys) { 
+                $response += "$key -> $($headers[$key])`n" 
+            } 
         }
         #Return Details of the ACL to STDOUT
         return $response.member
