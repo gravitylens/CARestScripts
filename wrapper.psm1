@@ -40,7 +40,6 @@ function New-CASession{
     $uri="$url/PasswordVault/api/Auth/cyberark/Logon"
 
     #Convert Password back to plaintext in order to create JSON body.
-    #TODO: See if there is a way to avoid plaintext conversion.
     $body = @{
         UserName = $UserName
         Password = ConvertFrom-SecureString -SecureString $Password -AsPlainText
@@ -105,25 +104,22 @@ function New-CASafe{
 
         Try{
             $response = Invoke-RestMethod -uri $uri -Method 'POST' -Headers $headers -Body $body
+            $result =$response.AddSafeResult
         }
-        #If unsuccessfull display simple error message
-        #TODO: If creation fails because safe already exists run Get-Safe and return safe properties anyway
-        CATCH{
-            #If the Rest Method fails, assign an appropriate error message to $response
-            $response = "ErrorCode: " + $_.Exception.Response.StatusCode.value__ + "`n"
-            $response += "Uri: " + $uri + "`n"
-            $response += "Method: " + $method + "`n"
-            $response += "Body: " + $body + "`n"
-            $response += "Headers: `n"# + $headers.GetEnumerator() | ForEach-Object { $_.Value }
+        Catch{
+            #If the Rest Method fails, assign an appropriate error message to $result
+            $result = "ErrorCode: " + $_.Exception.Response.StatusCode.value__ + "`n"
+            $result += "Uri: " + $uri + "`n"
+            $result += "Method: " + $method + "`n"
+            $result += "Body: " + $body + "`n"
+            $result += "Headers: `n"
             foreach ($key in $headers.Keys) { 
-                $response += "$key -> $($headers[$key])`n" 
+                $result += "$key -> $($headers[$key])`n" 
             } 
+            #TODO: If creation fails because safe already exists run Get-Safe and return safe properties anyway
         }
-        #Return Safe Properties to STDOUT
-        return $response.AddSafeResult;
-    }
-    END{
-
+        #Return $result to STDOUT
+        return $result;
     }
 }
 
@@ -177,19 +173,19 @@ function New-CASafeMember{
 
         Try{
             $response = Invoke-RestMethod -uri $uri -Method 'POST' -Headers $headers -Body $body
+            $result=$response.member
         }
-        CATCH{
-            #If the Rest Method fails, assign an appropriate error message to $response
-            $response = "ErrorCode: " + $_.Exception.Response.StatusCode.value__ + "`n"
-            $response += "Uri: " + $uri + "`n"
-            $response += "Method: " + $method + "`n"
-            $response += "Body: " + $body + "`n"
-            $response += "Headers: `n"# + $headers.GetEnumerator() | ForEach-Object { $_.Value }
+        Catch{
+            #If the Rest Method fails, assign an appropriate error message to $result
+            $result = "ErrorCode: " + $_.Exception.Response.StatusCode.value__ + "`n"
+            $result += "Uri: " + $uri + "`n"
+            $result += "Method: " + $method + "`n"
+            $result += "Body: " + $body + "`n"
+            $result += "Headers: `n"
             foreach ($key in $headers.Keys) { 
-                $response += "$key -> $($headers[$key])`n" 
-            } 
-        }
-        #Return Details of the ACL to STDOUT
-        return $response.member
+                $result += "$key -> $($headers[$key])`n" 
+        } 
+        #Return $result to STDOUT
+        return $result;
     }
 }
