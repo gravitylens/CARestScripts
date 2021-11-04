@@ -184,6 +184,7 @@ function New-CASafeMember{
             $result += "Headers: `n"
             foreach ($key in $headers.Keys) { 
                 $result += "$key -> $($headers[$key])`n" 
+            }
         } 
         #Return $result to STDOUT
         return $result;
