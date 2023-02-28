@@ -15,29 +15,30 @@ limitations under the License.
 #>
 Import-Module -Force ./wrapper.psm1
 
-$Permissions=@(
-     @{"Key"="UseAccounts"; "Value"=$true},
-     @{"Key"="RetrieveAccounts"; "Value"=$true},
-     @{"Key"="ListAccounts"; "Value"=$true},
-     @{"Key"="AddAccounts"; "Value"=$true},
-     @{"Key"="UpdateAccountContent"; "Value"=$true},
-     @{"Key"="UpdateAccountProperties"; "Value"=$true},
-     @{"Key"="InitiateCPMAccountManagementOperations"; "Value"=$true},
-     @{"Key"="SpecifyNextAccountContent"; "Value"=$true},
-     @{"Key"="RenameAccounts"; "Value"=$true},
-     @{"Key"="DeleteAccounts"; "Value"=$true},
-     @{"Key"="UnlockAccounts"; "Value"=$true},
-     @{"Key"="ManageSafe"; "Value"=$true},
-     @{"Key"="ManageSafeMembers"; "Value"=$true},
-     @{"Key"="BackupSafe"; "Value"=$true},
-     @{"Key"="ViewAuditLog"; "Value"=$true},
-     @{"Key"="ViewSafeMembers"; "Value"=$true},
-     @{"Key"="RequestsAuthorizationLevel"; "Value"=1},
-     @{"Key"="AccessWithoutConfirmation"; "Value"=$true},
-     @{"Key"="CreateFolders"; "Value"=$true},
-     @{"Key"="DeleteFolders"; "Value"=$true},
-     @{"Key"="MoveAccountsAndFolders"; "Value"=$true}
-)
+$permissions=@{
+    "useAccounts"=$true;
+    "retrieveAccounts"=$false;
+    "listAccounts"=$true;
+    "addAccounts"=$false;
+    "updateAccountContent"=$false;
+    "updateAccountProperties"=$false;
+    "initiateCPMAccountManagementOperations"=$false;
+    "specifyNextAccountContent"=$false;
+    "renameAccounts"=$false;
+    "deleteAccounts"=$false;
+    "unlockAccounts"=$false;
+    "manageSafe"=$false;
+    "manageSafeMembers"=$false;
+    "backupSafe"=$false;
+    "viewAuditLog"=$false;
+    "viewSafeMembers"=$false;
+    "accessWithoutConfirmation"=$false;
+    "createFolders"=$false;
+    "deleteFolders"=$false;
+    "moveAccountsAndFolders"=$false;
+    "requestsAuthorizationLevel1"=$false;
+    "requestsAuthorizationLevel2"=$false
+}
 
 #Test without Secure String
 #New-CASession -username "SafeFactory" -password "Cyberark1"
