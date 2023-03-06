@@ -17,26 +17,26 @@ Import-Module -Force ./wrapper.psm1
 
 $permissions=@{
     "useAccounts"=$true;
-    "retrieveAccounts"=$false;
+    "retrieveAccounts"=$true;
     "listAccounts"=$true;
-    "addAccounts"=$false;
-    "updateAccountContent"=$false;
-    "updateAccountProperties"=$false;
-    "initiateCPMAccountManagementOperations"=$false;
-    "specifyNextAccountContent"=$false;
-    "renameAccounts"=$false;
-    "deleteAccounts"=$false;
-    "unlockAccounts"=$false;
-    "manageSafe"=$false;
-    "manageSafeMembers"=$false;
-    "backupSafe"=$false;
-    "viewAuditLog"=$false;
-    "viewSafeMembers"=$false;
-    "accessWithoutConfirmation"=$false;
-    "createFolders"=$false;
-    "deleteFolders"=$false;
-    "moveAccountsAndFolders"=$false;
-    "requestsAuthorizationLevel1"=$false;
+    "addAccounts"=$true;
+    "updateAccountContent"=$true;
+    "updateAccountProperties"=$true;
+    "initiateCPMAccountManagementOperations"=$true;
+    "specifyNextAccountContent"=$true;
+    "renameAccounts"=$true;
+    "deleteAccounts"=$true;
+    "unlockAccounts"=$true;
+    "manageSafe"=$true;
+    "manageSafeMembers"=$true;
+    "backupSafe"=$true;
+    "viewAuditLog"=$true;
+    "viewSafeMembers"=$true;
+    "accessWithoutConfirmation"=$true;
+    "createFolders"=$true;
+    "deleteFolders"=$true;
+    "moveAccountsAndFolders"=$true;
+    "requestsAuthorizationLevel1"=$true;
     "requestsAuthorizationLevel2"=$false
 }
 
@@ -45,4 +45,4 @@ $permissions=@{
 
 #Test with Secure String
 Get-Credential -UserName "SafeFactory" | New-CASession
-@("Safe4", "Safe5", "Safe6")| New-CASafe | New-CASafeMember -MemberName "Vault Admins" -Permissions $Permissions
+@("Safe1", "Safe2", "Safe3")| New-CASafe | New-CASafeMember -MemberName "Vault Admins" -Permissions $Permissions

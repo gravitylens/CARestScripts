@@ -20,48 +20,55 @@ Import-Module ./GroupFactory.psm1
 Import-Module CredentialRetriever
 
 #Users may use passwords, view logs and Initiate CPM Operations
-$usersafeperms = @(
-    @{"Key"="UseAccounts"; "Value"=$true},
-    @{"Key"="RetrieveAccounts"; "Value"=$true},
-    @{"Key"="ListAccounts"; "Value"=$true},
-    @{"Key"="AddAccounts"; "Value"=$false},
-    @{"Key"="InitiateCPMAccountManagementOperations"; "Value"=$true},
-    @{"Key"="ViewAuditLog"; "Value"=$true},
-    @{"Key"="ViewSafeMembers"; "Value"=$true}
-)
-
+$usersafeperms =@{
+    "useAccounts"=$true;
+    "retrieveAccounts"=$true;
+    "listAccounts"=$true;
+    "addAccounts"=$true;
+    "initiateCPMAccountManagementOperations"=$true;
+    "viewAuditLog"=$true;
+    "viewSafeMembers"=$true;
+}
 #Auditors may list accounts and view logs
-$auditorsafeperms = @(
-    @{"Key"="UseAccounts"; "Value"=$false},
-    @{"Key"="RetrieveAccounts"; "Value"=$false},
-    @{"Key"="ListAccounts"; "Value"=$true},
-    @{"Key"="ViewAuditLog"; "Value"=$true},
-    @{"Key"="ViewSafeMembers"; "Value"=$true}
-)
+$auditorsafeperms =@{
+    "useAccounts"=$false;
+    "retrieveAccounts"=$false;
+    "listAccounts"=$true;
+    "viewAuditLog"=$true;
+    "viewSafeMembers"=$true
+}
 
 #Manager permissions are the same as the auditors with the addition of approving requests
-$managersafeperms = $auditorsafeperms + @{"Key"="RequestsAuthorizationLevel"; "Value"=1}
+$managersafeperms =@{
+    "useAccounts"=$false;
+    "retrieveAccounts"=$false;
+    "listAccounts"=$true;
+    "viewAuditLog"=$true;
+    "viewSafeMembers"=$true;
+    "requestsAuthorizationLevel1"=$true
+}
 
 #Vault Admins have Operations, Audit, and Advanced Permissions
-$vaultadminsafeperms = @(
-    @{"Key"="UseAccounts"; "Value"=$false},
-    @{"Key"="RetrieveAccounts"; "Value"=$false},
-    @{"Key"="ListAccounts"; "Value"=$true},
-    @{"Key"="AddAccounts"; "Value"=$true},
-    @{"Key"="UpdateAccountContent"; "Value"=$true},
-    @{"Key"="UpdateAccountProperties"; "Value"=$true},
-    @{"Key"="InitiateCPMAccountManagementOperations"; "Value"=$true},
-    @{"Key"="RenameAccounts"; "Value"=$true},
-    @{"Key"="DeleteAccounts"; "Value"=$true},
-    @{"Key"="UnlockAccounts"; "Value"=$true},
-    @{"Key"="ManageSafe"; "Value"=$true},
-    @{"Key"="ManageSafeMembers"; "Value"=$true},
-    @{"Key"="ViewAuditLog"; "Value"=$true},
-    @{"Key"="ViewSafeMembers"; "Value"=$true},
-    @{"Key"="CreateFolders"; "Value"=$true},
-    @{"Key"="DeleteFolders"; "Value"=$true},
-    @{"Key"="MoveAccountsAndFolders"; "Value"=$true}
-)
+$vaultadminsafeperms =@{
+    "useAccounts"=$false;
+    "retrieveAccounts"=$false;
+    "listAccounts"=$true;
+    "addAccounts"=$true;
+    "updateAccountContent"=$true;
+    "updateAccountProperties"=$true;
+    "initiateCPMAccountManagementOperations"=$true;
+    "renameAccounts"=$true;
+    "deleteAccounts"=$true;
+    "unlockAccounts"=$true;
+    "manageSafe"=$true;
+    "manageSafeMembers"=$true;
+    "viewAuditLog"=$true;
+    "viewSafeMembers"=$true;
+    "createFolders"=$true;
+    "deleteFolders"=$true;
+    "moveAccountsAndFolders"=$true
+}
+
 
 #On the Recording safes Auditors have typical end user permissions
 $auditorrecsafeperms = $usersafeperms
@@ -70,34 +77,34 @@ $auditorrecsafeperms = $usersafeperms
 $managerrecsafeperms = $usersafeperms
 
 #The PSMMaster group must have all permissions on recordings safes
-$psmrecsafeperms=@(
-    @{"Key"="UseAccounts"; "Value"=$true},
-    @{"Key"="RetrieveAccounts"; "Value"=$true},
-    @{"Key"="ListAccounts"; "Value"=$true},
-    @{"Key"="AddAccounts"; "Value"=$true},
-    @{"Key"="UpdateAccountContent"; "Value"=$true},
-    @{"Key"="UpdateAccountProperties"; "Value"=$true},
-    @{"Key"="InitiateCPMAccountManagementOperations"; "Value"=$true},
-    @{"Key"="SpecifyNextAccountContent"; "Value"=$true},
-    @{"Key"="RenameAccounts"; "Value"=$true},
-    @{"Key"="DeleteAccounts"; "Value"=$true},
-    @{"Key"="UnlockAccounts"; "Value"=$true},
-    @{"Key"="ManageSafe"; "Value"=$true},
-    @{"Key"="ManageSafeMembers"; "Value"=$true},
-    @{"Key"="BackupSafe"; "Value"=$true},
-    @{"Key"="ViewAuditLog"; "Value"=$true},
-    @{"Key"="ViewSafeMembers"; "Value"=$true},
-    @{"Key"="RequestsAuthorizationLevel"; "Value"=1},
-    @{"Key"="AccessWithoutConfirmation"; "Value"=$true},
-    @{"Key"="CreateFolders"; "Value"=$true},
-    @{"Key"="DeleteFolders"; "Value"=$true},
-    @{"Key"="MoveAccountsAndFolders"; "Value"=$true}
-)
+$psmrecsafeperms=@{
+    "useAccounts"=$true;
+    "retrieveAccounts"=$true;
+    "listAccounts"=$true;
+    "addAccounts"=$true;
+    "updateAccountContent"=$true;
+    "updateAccountProperties"=$true;
+    "initiateCPMAccountManagementOperations"=$true;
+    "specifyNextAccountContent"=$true;
+    "renameAccounts"=$true;
+    "deleteAccounts"=$true;
+    "unlockAccounts"=$true;
+    "manageSafe"=$true;
+    "manageSafeMembers"=$true;
+    "backupSafe"=$true;
+    "viewAuditLog"=$true;
+    "viewSafeMembers"=$true;
+    "accessWithoutConfirmation"=$true;
+    "createFolders"=$true;
+    "deleteFolders"=$true;
+    "moveAccountsAndFolders"=$true
+}
+
 
 #Retrieve the Administrator password from the Vault and Start a new session.
-$cert=$(Get-ChildItem Cert:\CurrentUser\My)[1]
-$(Get-CCPCredential -AppID App-PVWA-API -Safe CyberArk-Admin -Username SafeFactory -URL $url -Certificate $cert).ToCredential() | New-CASession
-#Get-Credential | New-CASession
+#$cert=$(Get-ChildItem Cert:\CurrentUser\My)[1]
+#$(Get-CCPCredential -AppID App-PVWA-API -Safe CyberArk-Admin -Username SafeFactory -URL $url -Certificate $cert).ToCredential() | New-CASession
+Get-Credential | New-CASession
 
 Import-csv ./test.csv | ForEach-Object{
     $SafeName = $_.SafeName
