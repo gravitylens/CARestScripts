@@ -30,7 +30,7 @@ $body = @{
 } | ConvertTo-Json
 
 # Invoke Rest Method
-$response = Invoke-RestMethod -uri $uri -Method $method -Headers $headers -Body $body
+$response = Invoke-RestMethod -uri $url -Method $method -Headers $headers -Body $body
 
 #Add response to headers and return
 $headers += @{"authorization" = $response}
