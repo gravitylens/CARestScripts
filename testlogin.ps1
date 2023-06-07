@@ -26,7 +26,7 @@ $method = "POST"
 $body = @{
     username = "SafeFactory"
     password = "Cyberark1"
-    concurrentSession = "false"
+    concurrentSession = $false
 } | ConvertTo-Json
 
 # Invoke Rest Method
