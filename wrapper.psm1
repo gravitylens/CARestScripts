@@ -163,12 +163,10 @@ function New-CASafeMember{
     PROCESS{
         $uri="$url/PasswordVault/WebServices/PIMServices.svc/Safes/$SafeName/Members"
         $body = @{
-            "member"= @{
                 "MemberName"=$MemberName
                 "SearchIn"=$SearchIn
                 "MembershipExpirationDate"=$MembershipExpirationDate
                 "Permissions"=$Permissions  
-            }
         } | ConvertTo-Json -Depth 3
 
         Try{
