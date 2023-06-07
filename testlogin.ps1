@@ -13,18 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 #>
-$global:headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$global:headers.Add("Content-Type", "application/json")
-$global:url = "https://pvwa.acme.corp"
+# Headers
+$headers = @{"content-type" = "application/json"}
 
-$uri="$url/PasswordVault/api/Auth/cyberark/Logon"
+# URL
+$url="https://pvwa.acme.corp/PasswordVault/api/Auth/cyberark/Logon"
 
+# HTTP Method
+$method = "POST"
+
+# Body
 $body = @{
     username = "SafeFactory"
     password = "Cyberark1"
     concurrentSession = "false"
 } | ConvertTo-Json
 
-$response = Invoke-RestMethod -uri $uri -Method 'POST' -Headers $headers -Body $body
-$global:headers.Add("Authorization", $response)
+# Invoke Rest Method
+$response = Invoke-RestMethod -uri $uri -Method $method -Headers $headers -Body $body
+
+#Add response to headers and return
+$headers += @{"authorization" = $response}
 write-host $response
