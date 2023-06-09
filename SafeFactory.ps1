@@ -117,7 +117,7 @@ Import-csv ./test.csv | ForEach-Object{
     
     #Create Safes
     New-CASafe $SafeName
-    New-CASafe "Rec_$SafeName"
+    New-CASafe $RecSafeName
     
     #Add Vault Admins to Safes
     New-CASafeMember -SafeName $SafeName -MemberName "Vault Admins" -SearchIn "Vault" -Permissions $vaultadminsafeperms
