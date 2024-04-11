@@ -1,0 +1,23 @@
+meta {
+  name: Request PSM Session
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{BaseURL}}/PasswordVault/API/Accounts/{{AccountID}}/PSMConnect/
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: {{AuthorizationToken}}
+}
+
+body:json {
+  {
+    "reason": "API Test",
+    "ConnectionComponent": "PSM-SSH"
+  }
+}

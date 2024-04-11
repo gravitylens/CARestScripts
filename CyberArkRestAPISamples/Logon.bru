@@ -1,0 +1,22 @@
+meta {
+  name: Logon
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BaseURL}}/PasswordVault/API/auth/Cyberark/Logon/
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "{{Username}}",
+    "password": "{{Password}}"
+  }
+}

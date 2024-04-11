@@ -1,0 +1,26 @@
+meta {
+  name: Add User
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BaseURL}}/PasswordVault/api/Users
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: {{AuthorizationToken}}
+}
+
+body:json {
+  {
+    "username": "testuser1",
+    "userType": "EPVUser",
+    "initialPassword": "Cyberark1",
+    "authenticationMethod": [
+      "AuthTypePass"
+    ]}
+}

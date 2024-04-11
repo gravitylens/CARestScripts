@@ -1,0 +1,48 @@
+meta {
+  name: Add Safe Member
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BaseURL}}/PasswordVault/API/Safes/{{SafeName}}/Members/
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: {{AuthorizationToken}}
+}
+
+body:json {
+  {
+    "memberName": "testuser1",
+    "searchIn": "Vault",
+    "permissions": {
+      "useAccounts": true,
+      "retrieveAccounts": true,
+      "listAccounts": true,
+      "addAccounts": true,
+      "updateAccountContent": true,
+      "updateAccountProperties": true,
+      "initiateCPMAccountManagementOperations": true,
+      "specifyNextAccountContent": true,
+      "renameAccounts": true,
+      "deleteAccounts": true,
+      "unlockAccounts": true,
+      "manageSafe": true,
+      "manageSafeMembers": true,
+      "backupSafe": true,
+      "viewAuditLog": true,
+      "viewSafeMembers": true,
+      "accessWithoutConfirmation": true,
+      "createFolders": true,
+      "deleteFolders": true,
+      "moveAccountsAndFolders": true,
+      "requestsAuthorizationLevel1": true,
+      "requestsAuthorizationLevel2": false
+    },
+    "MemberType": "Group"
+  }
+}

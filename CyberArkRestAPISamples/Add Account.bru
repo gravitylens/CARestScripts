@@ -1,0 +1,27 @@
+meta {
+  name: Add Account
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{BaseURL}}/PasswordVault/api/Accounts
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: {{AuthorizationToken}}
+}
+
+body:json {
+  {
+    "address": "target-linux",
+    "userName": "root",
+    "platformId": "UnixSSH",
+    "safeName": "{{SafeName}}",
+    "secretType": "password",
+    "secret": "Cyberark1"
+  }
+}
