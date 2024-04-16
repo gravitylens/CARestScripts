@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 #>
 # Headers
-$headers = @{"content-type" = "application/json"}
+$global:headers = @{"content-type" = "application/json"}
 
 # URI
 $uri="https://pvwa.acme.corp/PasswordVault/api/Auth/cyberark/Logon"
